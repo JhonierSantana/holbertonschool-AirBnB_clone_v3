@@ -17,7 +17,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 
 class FileStorage:
-    """serializes instances to a JSON file & deserializes back to instances"""
+    """serializes ins to a JSON file & deserializes back to ins"""
 
     # string - path to the JSON file
     __file_path = "file.json"
@@ -68,3 +68,14 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        dict_cls = self.all(cls)
+        for ins in dict_cls.values():
+            if ins.id == id:
+                return ins
+        return None
+
+    def count(self, cls=None):
+        dict_cls = self.all(cls)
+        return len(dict_cls.values())
