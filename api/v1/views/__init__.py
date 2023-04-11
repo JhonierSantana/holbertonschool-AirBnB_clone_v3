@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """Init file for flask views"""
-
 from api.v1.views.places_amenities import *
 from api.v1.views.places_reviews import *
 from api.v1.views.places import *
