@@ -23,7 +23,8 @@ def retrieves_state_by_id(state_id):
     abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def deletes_state_by_id(state_id):
     state = storage.get(State, state_id)
     if not state:
