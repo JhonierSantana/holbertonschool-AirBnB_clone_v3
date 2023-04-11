@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 """State flask handler"""
 
+
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 from models import storage
 from models.state import State
 
 
-@app_views.route("/api/v1/states", methods=["GET"], strict_slashes=False)
+@app_views.route('/api/v1/states/', methods=['GET'], strict_slashes=False)
 def retrieves_states():
     empy_list = []
     for state in storage.all(State).values():
@@ -24,12 +25,12 @@ def retrieves_state_by_id(state_id):
 
 
 @app_views.route('/api/v1/states/<state_id>', methods=['DELETE'], strict_slashes=False)
-def delate_state_by_id(state_id):
+def deletes_state_by_id(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
     state.delete()
-    state.save()
+    storage.save()
     return jsonify({}), 200
 
 
@@ -53,10 +54,10 @@ def update_state_by_id(state_id):
 
     body = request.get_json()
     if not body:
-        abort(404, 'Not a JSON')
+        abort(400, 'Not a JSON')
 
     for key, value in body.items():
-        if key in ['id', 'create_at', 'update_at']:
+        if key in ['id', 'created_at', 'updated_at']:
             continue
         else:
             setattr(state, key, value)
