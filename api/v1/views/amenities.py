@@ -8,27 +8,28 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/api/v1/amenities', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def amenities():
-    amen = [amenity.to_dict() for amenity in storage.all(Amenity).values()]
-    return jsonify(amen)
+    amenties = [amenity.to_dict() for amenity in storage.all(Amenity).values()]
+    return jsonify(amenties)
 
 
-@app_views.route('/api/v1/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
-def amenities_by_id(amenity_id):
-    amenity = storage.get(Amenity, amenity_id)
+@app_views.route('/amenities/<amnt_id>', methods=['GET'], strict_slashes=False)
+def amenity_by_id(amnt_id):
+    amenity = storage.get(Amenity, amnt_id)
     if amenity:
         return jsonify(amenity.to_dict())
     abort(404)
 
 
-@app_views.route('/api/v1/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
-def delete_amenity_by_id(amenity_id):
-    amenity = storage.get(Amenity, amenity_id)
+@app_views.route(
+    '/amenities/<amnt_id>', methods=['DELETE'], strict_slashes=False)
+def deletes_amenity_by_id(amnt_id):
+    amenity = storage.get(Amenity, amnt_id)
     if not amenity:
         abort(404)
     amenity.delete()
-    amenity.save()
+    storage.save()
     return jsonify(), 200
 
 
@@ -44,9 +45,9 @@ def create_amenity():
     return jsonify(new_amenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
-def upadate_amenity_by_id(amenity_id):
-    amenity = storage.get(Amenity, amenity_id)
+@app_views.route('/amenities/<amnt_id>', methods=['PUT'], strict_slashes=False)
+def update_amenity_by_id(amnt_id):
+    amenity = storage.get(Amenity, amnt_id)
     if not amenity:
         abort(404)
 
