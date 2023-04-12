@@ -10,7 +10,7 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashe=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
 def places_by_id(city_id):
     city = storage.get(City, city_id)
     if not city:
