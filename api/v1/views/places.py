@@ -10,7 +10,8 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route(
+        '/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
 def places_by_id(city_id):
     city = storage.get(City, city_id)
     if not city:
@@ -27,7 +28,8 @@ def place_by_id(place_id):
     abort(404)
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+        '/places/<place_id>', methods=['DELETE'], strict_slashes=False)
 def deletes_place_by_id(place_id):
     place = storage.get(Place, place_id)
     if not place:
@@ -37,7 +39,8 @@ def deletes_place_by_id(place_id):
     return jsonify(), 200
 
 
-@app_views.route('cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route(
+        'cities/<city_id>/places', methods=['POST'], strict_slashes=False)
 def create_place(city_id):
     city = storage.get(City, city_id)
     if not city:
